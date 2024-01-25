@@ -1,1 +1,89 @@
-hola mundo
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <title>ExU1</title>
+</head>
+
+<body>
+
+    <div class="card content" style="width: 18rem;">
+        <img id="imgPoke" class="card-img-top" alt="image">
+        <div class="card-body">
+            <h5 class="card-title" id="namePoke"></h5>
+            <label for="heightPoke">Height: </label>
+            <p class="card-text" id="heightPoke"></p>
+            <label for="weightPoke">Weight: </label>
+            <p class="card-text" id="weightPoke"></p>
+            <a href="#" class="btn btn-primary" onclick="getRandomInt(1006)">Search Pokemon</a>
+        </div>
+    </div>
+    <div id="cardContainer" class="card-container" style="display:flex;"></div>
+
+    <script>
+        const llamdapokemon = async (id) => {
+            const url = `https://pokeapi.co/api/v2/pokemon/${id}`;
+            try {
+                const response = await fetch(url);
+                console.log(response);
+
+                const data = await response.json();
+                console.log(data);
+
+                const img = document.getElementById("imgPoke");
+                img.src = data.sprites.front_default;
+
+                const name = document.getElementById("namePoke");
+                name.textContent = data.name;
+
+                const height = document.getElementById("heightPoke");
+                height.textContent = data.height;
+
+                const weight = document.getElementById("weightPoke");
+                weight.textContent = data.weight;
+                const newCard = document.createElement("div");
+    newCard.className = "card content";
+    newCard.style = "width: 18rem;";
+
+    
+    newCard.innerHTML = document.querySelector(".card.content").innerHTML;
+
+    document.getElementById("cardContainer").appendChild(newCard);
+
+
+            } catch (error) {
+            }
+        }
+
+        fetch("https://pokeapi.co/api/v2/pokemon/gengar/")
+            .then(response => response.json())
+            .then(data => {
+                let img = document.getElementById("imgPoke");
+                img.src = data.sprites.front_default;
+
+                let name = document.getElementById("namePoke");
+                name.textContent = data.name;
+
+                let height = document.getElementById("heightPoke");
+                height.textContent = data.height;
+
+                let weight = document.getElementById("weightPoke");
+                weight.textContent = data.weight;
+            })
+
+        function getRandomInt(max) {
+            const number = Math.floor(Math.random() * max);
+            llamdapokemon(number);
+
+        }
+        
+
+
+    </script>
+</body>
+
+</html>
